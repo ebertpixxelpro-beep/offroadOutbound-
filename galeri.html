@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri | Outbound Offroad Adventure</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        body {
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            transition: 0.5s;
+            z-index: 1000;
+        }
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 12px 8%;
+            border-bottom: 1px solid #333;
+        }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: 2px; color: #ff9800; text-decoration: none; }
+        .logo span { color: #fff; }
+        .nav-menu { display: flex; align-items: center; gap: 26px; }
+        .nav-menu a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-menu a:hover { color: #ff9800; }
+        .nav-menu .cta { background: #ff9800; color: #000; padding: 10px 22px; border-radius: 30px; }
+        
+        /* Dropdown */
+        .nav-dropdown { position: relative; }
+        .dropdown-menu { 
+            position: absolute; top: 100%; left: 0; 
+            background: #111; border-radius: 8px; min-width: 180px; 
+            display: none; flex-direction: column; padding: 10px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .dropdown-menu a { padding: 12px 20px; font-size: 13px; text-transform: none; }
+        .dropdown-menu.show { display: flex; }
+
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .menu-toggle span { width: 26px; height: 3px; background: #fff; border-radius: 5px; }
+
+        /* ===== HEADER GALERI ===== */
+        .gallery-header {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('aset/galeri-hero.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .gallery-header h1 { 
+            font-size: clamp(32px, 5vw, 56px); 
+            color: #ff9800; 
+            text-transform: uppercase; 
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+        .gallery-header p { color: #ccc; font-size: clamp(16px, 2vw, 20px); max-width: 600px; margin: 0 auto; }
+
+        /* ===== GRID GALERI ===== */
+        .gallery-section {
+            padding: 80px 8%;
+            background: #000;
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 350px;
+            cursor: pointer;
+            border: 1px solid #222;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .gallery-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 152, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.4s ease;
+        }
+        .gallery-overlay i {
+            font-size: 40px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .gallery-overlay span {
+            color: #000;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateY(20px);
+            transition: 0.4s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-item:hover .gallery-overlay span {
+            transform: translateY(0);
+        }
+
+        /* ===== LIGHTBOX MODAL ===== */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 40px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255,152,0,0.2);
+            transform: scale(0.9);
+            transition: 0.3s;
+        }
+        .lightbox.active img { transform: scale(1); }
+        .close-lightbox {
+            position: absolute;
+            top: 30px; right: 40px;
+            color: #ff9800;
+            font-size: 50px;
+            cursor: pointer;
+            font-weight: 200;
+        }
+
+        /* ===== FOOTER ===== */
+        footer { background: #0a0a0a; padding: 80px 8% 40px; color: #ccc; border-top: 1px solid #222; }
+        .footer-container { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 40px; }
+        .footer-container h3 { color: #ff9800; margin-bottom: 20px; letter-spacing: 1px; }
+        .footer-container p { font-size: 14px; line-height: 1.6; }
+        .footer-container a { color: #aaa; text-decoration: none; transition: 0.3s; display: block; margin-bottom: 10px; }
+        .footer-container a:hover { color: #ff9800; padding-left: 5px; }
+        .footer-bottom { text-align: center; border-top: 1px solid #222; padding-top: 30px; margin-top: 50px; font-size: 13px; color: #555; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 5%; background: rgba(0,0,0,0.9); }
+            .menu-toggle { display: flex; }
+            .nav-menu { 
+                position: absolute; top: 100%; right: -100%; 
+                background: #000; flex-direction: column; 
+                width: 100%; padding: 40px; transition: 0.4s; 
+                height: 100vh; border-top: 1px solid #222;
+            }
+            .nav-menu.active { right: 0; }
+            .gallery-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .gallery-item { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="lightbox" id="lightbox">
+    <span class="close-lightbox">&times;</span>
+    <img src="" alt="Fullscreen Image">
+</div>
+
+<nav class="navbar" id="navbar">
+    <a href="hero.html" class="logo">OFF<span>ROAD</span></a>
+
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="nav-menu" id="navMenu">
+        <a href="hero.html">Home</a>
+        <a href="tentang-kami.html">Tentang</a>
+
+        <div class="nav-dropdown">
+            <a href="#" id="paketBtn">Paket ▾</a>
+            <div class="dropdown-menu" id="paketMenu">
+                <a href="Fun Offroad.Html">Fun Offroad</a>
+                <a href="Adventure Offroad.HTML">Adventure Offroad</a>
+                <a href="Corporate Team.HTML">Corporate Team</a>
+            </div>
+        </div>
+
+        <a href="galeri.html" style="color: #ff9800;">Galeri</a>
+     <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="cta">Booking</a>
+    </div>
+</nav>
+
+<header class="gallery-header">
+    <div>
+        <h1>Dokumentasi Petualangan</h1>
+        <p>Lihat bagaimana keseruan menembus batas alam bersama tim profesional kami.</p>
+    </div>
+</header>
+
+<section class="gallery-section">
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="aset/Aksi Jeep melintasi lumpur.webp" alt="Aksi Jeep melintasi lumpur">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Pemandangan puncak gunung.webp" alt="Pemandangan puncak gunung">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Tim Corporate Gathering.webp" alt="Tim Corporate Gathering">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Track ekstrem tanjakan.webp" alt="Track ekstrem tanjakan">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Camping Ground.webp" alt="Camping Ground">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Sunset Offroad.webp" alt="Sunset Offroad">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>OFFROAD ADVENTURE</h3>
+            <p>Jalan Raya Adventure No.12, Kota Malang, Indonesia</p>
+            <p style="margin-top: 10px;">Pengalaman offroad terbaik di Jawa Timur dengan armada 4x4 premium dan driver bersertifikat.</p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <a href="hero.html">Home</a>
+            <a href="tentang-kami.html">Tentang Kami</a>
+            <a href="galeri.html">Galeri Foto</a>
+            <a href="#kontak">Kontak Kami</a>
+        </div>
+
+        <div>
+            <h3>Paket Pilihan</h3>
+            <a href="Fun Offroad.Html">Fun Offroad</a>
+            <a href="Adventure Offroad.HTML">Extreme Adventure</a>
+            <a href="Corporate Team.HTML">Team Corporate</a>
+        </div>
+
+        <div>
+            <h3>Sosial Media</h3>
+            <p>Ikuti keseruan kami setiap hari:</p>
+            <div style="display: flex; gap: 15px; margin-top: 15px;">
+<a href="tentang-kami.html">📘</a><a href="galeri.html">📸</a><a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking">💬</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Outbound Offroad Adventure. Dirancang untuk Petualang Sejati.</p>
+    </div>
+</footer>
+
+<script>
+    // JS UNTUK NAVBAR SCROLL
+    const navbar = document.getElementById("navbar");
+    window.onscroll = () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+    };
+
+    // NAVBAR MOBILE TOGGLE
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const paketBtn = document.getElementById("paketBtn");
+    const paketMenu = document.getElementById("paketMenu");
+
+    menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+    });
+
+    paketBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        paketMenu.classList.toggle("show");
+    });
+
+    // LIGHTBOX LOGIC
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const closeLightbox = document.querySelector('.close-lightbox');
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const imgSrc = item.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Stop scrolling
+        });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto'; // Enable scrolling
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if(e.target !== lightboxImg) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+</script>
+
+</body>
+</html>

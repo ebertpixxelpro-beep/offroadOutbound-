@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami | Outbound Offroad Adventure</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            background: #000;
+            color: #fff;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 16px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ff9800;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .logo span { color: #fff; }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-menu a:hover { color: #ff9800; }
+
+        .nav-menu .cta {
+            background: #ff9800;
+            color: #000;
+            padding: 10px 22px;
+            border-radius: 30px;
+        }
+        .nav-menu .cta:hover { background: #fff; }
+
+        /* DROPDOWN */
+        .nav-dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #111;
+            border-radius: 8px;
+            min-width: 180px;
+            display: none;
+            flex-direction: column;
+            padding: 10px 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .dropdown-menu a {
+            padding: 12px 20px;
+            font-size: 13px;
+            text-transform: none;
+        }
+        .dropdown-menu.show { display: flex; }
+
+        /* HAMBURGER */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            width: 26px;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* ===== RESPONSIVE MOBILE ===== */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+
+            .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                background: #000;
+                flex-direction: column;
+                width: 100%;
+                padding: 40px;
+                gap: 25px;
+                transition: 0.4s;
+                height: 100vh;
+            }
+
+            .nav-menu.active { right: 0; }
+
+            .dropdown-menu {
+                position: static;
+                background: #111;
+                width: 100%;
+                box-shadow: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-dropdown:hover .dropdown-menu { display: flex; }
+        }
+
+        /* ===== HEADER & CONTENT ===== */
+        .page-header {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('aset/panjang.webp');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            padding-top: 80px;
+        }
+        .page-header h1 { font-size: 46px; color: #ff9800; }
+        .page-header p { color: #ddd; }
+
+        section { padding: 60px 8%; } /* Padding dikurangi sedikit agar lebih rapat */
+        .about-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 40px; }
+        .about-wrapper img { width: 100%; border-radius: 16px; object-fit: cover; }
+        .about-text h2 { color: #ff9800; margin-bottom: 15px; font-size: 32px; }
+        .about-text p { color: #ccc; line-height: 1.8; margin-bottom: 15px; }
+
+        /* REVERSE SECTION STYLE */
+        .about-wrapper.reverse img { order: 1; }
+        .about-wrapper.reverse .about-text { order: 2; }
+
+        .vision { background: #111; border-radius: 20px; padding: 40px; margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .vision h3 { color: #ff9800; margin-bottom: 10px; }
+
+        footer { background: #111; padding: 80px 8% 40px; color: #ccc; }
+        .footer-container { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-container h3 { color: #ff9800; margin-bottom: 20px; }
+        .footer-container a { color: #aaa; text-decoration: none; }
+        .footer-bottom { text-align: center; border-top: 1px solid #333; padding-top: 20px; font-size: 13px; color: #777; }
+
+        @media(max-width:768px){
+            .about-wrapper, .vision { grid-template-columns: 1fr; }
+            .about-wrapper.reverse img { order: 2; }
+            .about-wrapper.reverse .about-text { order: 1; }
+            .page-header h1 { font-size: 34px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="hero.html" class="logo">OFF<span>ROAD</span></a>
+    <div class="menu-toggle" id="menuToggle">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="nav-menu" id="navMenu">
+        <a href="hero.html">Home</a>
+        <a href="tentang-kami.html">Tentang</a>
+        <div class="nav-dropdown">
+            <a href="#" id="paketBtn">Paket ▾</a>
+            <div class="dropdown-menu" id="paketMenu">
+                <a href="Fun Offroad.Html">Fun Offroad</a>
+                <a href="Adventure Offroad.HTML">Adventure Offroad</a>
+                <a href="Corporate Team.HTML">Corporate Team</a>
+            </div>
+        </div>
+        <a href="galeri.html">Galeri</a>
+             <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="cta">Booking</a>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div>
+        <h1>Tentang Kami</h1>
+        <p>Profesional • Aman • Berpengalaman</p>
+    </div>
+</div>
+
+<section>
+    <div class="about-wrapper">
+        <div class="about-text">
+            <h2>Outbound Offroad Adventure</h2>
+            <p>Kami adalah penyedia kegiatan outbound offroad profesional yang berfokus pada pengalaman seru, aman, dan penuh tantangan di alam terbuka.</p>
+            <p>Dengan armada 4x4 terbaik, jalur offroad pilihan, serta driver dan fasilitator berpengalaman, kami siap memberikan pengalaman tak terlupakan.</p>
+        </div>
+        <img src="aset/Adventure 2.webp" alt="Tentang Kami">
+    </div>
+
+    <div class="about-wrapper reverse">
+        <img src="aset/Adventure.webp" alt="Eksplorasi Alam">
+        <div class="about-text">
+            <h2>Menjelajahi Batas Adrenalin</h2>
+            <p>Lebih dari sekadar berkendara, kami menawarkan perjalanan edukatif yang membangun karakter dan kekompakan tim melalui rute-rute ekstrem di pegunungan dan hutan.</p>
+            <p>Setiap perjalanan dirancang untuk menguji keberanian sekaligus memberikan rasa puas saat berhasil menaklukkan rintangan alam yang sulit bersama-sama.</p>
+        </div>
+    </div>
+
+    <div class="vision">
+        <div>
+            <h3>Visi</h3>
+            <p>Menjadi penyedia outbound offroad terbaik di Indonesia.</p>
+        </div>
+        <div>
+            <h3>Misi</h3>
+            <p>
+                • Aman & profesional<br>
+                • Teamwork solid<br>
+                • Pariwisata berkelanjutan
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>OFFROAD ADVENTURE</h3>
+            <p>Jalan Raya Adventure No.12, Kota Malang, Indonesia</p>
+            <p>Email: info@offroad.com</p>
+            <p>Telp: +62_</p>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <p><a href="hero.html">Home</a></p>
+            <p><a href="tentang-kami.html">Tentang</a></p>
+            <p><a href="galeri.html">Galeri</a></p>
+        </div>
+        <div>
+            <h3>Paket Populer</h3>
+            <p><a href="Fun Offroad.Html">Fun Offroad</a></p>
+            <p><a href="Adventure Offroad.HTML">Adventure Offroad</a></p>
+            <p><a href="Corporate Team.HTML">Corporate Team</a></p>
+        </div>
+        <div>
+            <h3>Follow Us</h3>
+            <div class="footer-social">
+<a href="tentang-kami.html">📘</a><a href="galeri.html">📸</a><a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking">💬</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Outbound Offroad Adventure. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const paketBtn = document.getElementById("paketBtn");
+    const paketMenu = document.getElementById("paketMenu");
+
+    menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+    });
+
+    paketBtn.addEventListener("click", (e) => {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            paketMenu.classList.toggle("show");
+        }
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove("active");
+            menuToggle.classList.remove("active");
+        }
+    });
+</script>
+
+</body>
+</html>

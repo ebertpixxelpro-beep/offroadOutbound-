@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Outbound Offroad Adventure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif}
+body{background:#000;color:#fff}
+
+/* ================= NAVBAR ================= */
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:16px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:999;
+    background:rgba(0,0,0,0.2);
+    backdrop-filter:blur(10px);
+    transition:0.4s
+}
+.navbar.scrolled{
+    background:rgba(0,0,0,0.9);
+    box-shadow:0 10px 30px rgba(0,0,0,0.7)
+}
+.logo{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-decoration:none;
+    color:#ff9800
+}
+.logo span{color:#fff}
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:28px
+}
+.nav-menu a{
+    position:relative;
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:6px 0
+}
+.nav-menu a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#ff9800;
+    transition:0.3s
+}
+.nav-menu a:hover::after{width:100%}
+.nav-menu a:hover{color:#ff9800}
+
+.nav-menu .cta{
+    padding:10px 22px;
+    border-radius:30px;
+    background:#ff9800;
+    color:#000;
+    font-weight:700
+}
+
+/* ================= DROPDOWN ================= */
+.nav-dropdown{position:relative}
+.dropdown-menu{
+    position:absolute;
+    top:40px;
+    left:0;
+    background:#111;
+    border-radius:12px;
+    min-width:200px;
+    padding:10px 0;
+    display:none;
+    flex-direction:column;
+    box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    z-index:1000
+}
+.dropdown-menu a{padding:12px 20px;color:#fff;font-size:13px;text-transform:none}
+.dropdown-menu a:hover{background:#ff9800;color:#000}
+.nav-dropdown:hover .dropdown-menu{display:flex}
+
+/* ================= MOBILE MENU ================= */
+.menu-toggle{
+    display:none;
+    width:30px;
+    height:22px;
+    flex-direction:column;
+    justify-content:space-between;
+    cursor:pointer
+}
+.menu-toggle span{height:3px;background:#fff;border-radius:5px;transition:0.4s}
+.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+
+/* ================= HERO ================= */
+.hero{height:100vh;background:linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('aset/mobol.webp');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.hero-content{max-width:800px}
+.hero h1{font-size:52px;font-weight:800;margin-bottom:20px;text-transform:uppercase}
+.hero p{font-size:18px;color:#ddd;margin-bottom:35px;line-height:1.7}
+.hero-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+.hero-buttons a{padding:14px 32px;border-radius:30px;font-weight:700;text-decoration:none}
+.btn-primary{background:#ff9800;color:#000}
+.btn-secondary{border:2px solid #fff;color:#fff}
+
+/* ================= SECTION ================= */
+section{padding:40px 8%}
+.section-title{text-align:center;margin-bottom:30px}
+.section-title h2{font-size:36px;color:#ff9800;margin-bottom:10px}
+.section-title p{color:#ccc}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.about img{width:100%;border-radius:15px;object-fit:cover}
+.about p{line-height:1.8;color:#ddd;margin-bottom:15px}
+.btn-more{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 30px;
+    border-radius:30px;
+    background:#ff9800;
+    color:#000;
+    font-weight:700;
+    text-decoration:none;
+    transition:0.3s;
+}
+.btn-more:hover{background:#ffa726;transform:translateY(-2px)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+.card{background:#111;border-radius:15px;overflow:hidden;text-decoration:none}
+.card img{width:100%;height:200px;object-fit:cover}
+.card-content{padding:20px}
+.card-content h3{color:#ff9800;margin-bottom:10px}
+
+/* GALLERY */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:15px;
+}
+.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px}
+
+/* CTA */
+.cta-section{background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('aset/panjang.webp');background-size:cover;background-position:center;text-align:center;padding:60px 8%}
+.cta-section h2{font-size:40px;margin-bottom:20px}
+
+/* FOOTER */
+footer{background:#111;padding:50px 8% 40px;color:#ccc}
+.footer-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;margin-bottom:40px}
+.footer-container h3{color:#ff9800;margin-bottom:20px;font-size:18px}
+.footer-container p, .footer-container a{color:#aaa;text-decoration:none;font-size:14px;line-height:1.6}
+.footer-container a:hover{color:#ff9800}
+.footer-social{display:flex;gap:15px;margin-top:10px}
+.footer-social a{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;background:#222;border-radius:50%;color:#ff9800;font-size:18px;transition:0.3s}
+.footer-bottom{text-align:center;border-top:1px solid #333;padding-top:20px;color:#777;font-size:13px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .hero h1{font-size:36px}
+    .about{grid-template-columns:1fr}
+    .nav-menu{position:absolute;top:75px;right:-100%;background:#000;flex-direction:column;width:260px;padding:30px;gap:20px;border-radius:0 0 0 20px;transition:0.4s}
+    .nav-menu.active{right:0}
+    .menu-toggle{display:flex}
+    
+    .gallery{
+        grid-template-columns:repeat(2, 1fr); /* Tetap 2 kolom di mobile */
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar" id="navbar">
+    <a href="hero.html" class="logo">OFF<span>ROAD</span></a>
+    <div class="menu-toggle" id="menuToggle">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="nav-menu" id="navMenu">
+        <a href="hero.html">Home</a>
+        <a href="tentang-kami.html">Tentang</a>
+        <div class="nav-dropdown">
+            <a href="#" id="paketBtn">Paket ▾</a>
+            <div class="dropdown-menu">
+                <a href="Fun Offroad.Html">Fun Offroad</a>
+                <a href="Adventure Offroad.HTML">Extreme Adventure</a>
+                <a href="Corporate Team.HTML">Team Corporate</a>
+            </div>
+        </div>
+        <a href="galeri.html">Galeri</a>
+      <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="cta">Booking</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Outbound Offroad Adventure</h1>
+        <p>Pengalaman seru, menantang, dan membangun teamwork di alam terbuka.</p>
+        <div class="hero-buttons">
+            <a href="#paket" class="btn-primary">Lihat Paket</a>
+            <a href="#kontak" class="btn-secondary">Hubungi Kami</a>
+        </div>
+    </div>
+</section>
+
+<section id="tentang">
+    <div class="section-title">
+        <h2>Tentang Kami</h2>
+        <p>Outbound offroad profesional & aman</p>
+    </div>
+
+    <div class="about">
+                <div class="about-img">
+            <img src="aset/mobil.webp" alt="Tentang Kami">
+        </div>
+        <div class="about-text">
+            <p>
+                Kami adalah penyedia layanan outbound offroad terpercaya yang berdedikasi untuk memberikan pengalaman petualangan luar ruang yang tak terlupakan. Dengan armada JEEP 4x4 yang tangguh dan selalu dalam kondisi prima, kami siap membawa Anda menembus jalur-jalur ekstrem, mulai dari hutan pinus yang asri hingga lintasan berlumpur yang menantang adrenalin.
+            </p>
+            <p>
+                Didukung oleh driver profesional yang sangat menguasai medan dan fasilitator yang ahli dalam pengembangan tim, kami tidak hanya menawarkan sekadar perjalanan, melainkan juga simulasi kerja sama tim dan keberanian. Kami percaya bahwa setiap tantangan di jalur offroad adalah pelajaran berharga untuk memperkuat soliditas tim Anda.
+            </p>
+            <p>
+                Keamanan adalah prioritas utama kami. Setiap armada kami dilengkapi dengan standar keselamatan tinggi dan kru kami telah melalui pelatihan khusus untuk menangani berbagai situasi di medan sulit. Bersama kami, Anda akan mendapatkan perpaduan antara wisata alam, olahraga ekstrem, dan keceriaan tanpa rasa khawatir.
+            </p>
+            <a href="tentang-kami.html" class="btn-more">Selengkapnya</a>
+        </div> 
+
+    </div>
+</section>
+
+<section id="paket">
+    <div class="section-title">
+        <h2>Paket Offroad</h2>
+    </div>
+    <div class="packages">
+        <a href="Fun Offroad.Html" class="card">
+            <img src="aset/Fun Offroad.webp">
+            <div class="card-content">
+                <h3>Fun Offroad</h3>
+                <p style="color:#fff">Seru & aman untuk semua kalangan.</p>
+            </div>
+        </a>
+        <a href="Adventure Offroad.HTML" class="card">
+            <img src="aset/Adventure Offroad.webp">
+            <div class="card-content">
+                <h3>Adventure Offroad</h3>
+                <p style="color:#fff">Medan ekstrem & menantang.</p>
+            </div>
+        </a>
+        <a href="Corporate Team.HTML" class="card">
+            <img src="aset/Corporate Team Building.webp">
+            <div class="card-content">
+                <h3>Corporate Team</h3>
+                <p style="color:#fff">Team building perusahaan.</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+<section id="galeri">
+    <div class="section-title">
+        <h2>Galeri</h2>
+    </div>
+    <div class="gallery">
+        <img src="aset/Aksi Jeep melintasi lumpur.webp">
+        <img src="aset/Pemandangan puncak gunung.webp">
+        <img src="aset/Tim Corporate Gathering.webp">
+        <img src="aset/Sunset Offroad.webp">
+    </div>
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="galeri.html" class="btn-more">Lihat Selengkapnya</a>
+    </div>
+</section>
+
+<section class="cta-section" id="kontak">
+    <h2>Siap Menaklukkan Medan?</h2>
+    <div class="hero-buttons">
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="btn-primary">Booking Sekarang</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>OFFROAD ADVENTURE</h3>
+            <p>Jalan Raya Adventure No.12, Kota Malang, Indonesia</p>
+            <p>Email: info@offroad.com</p>
+            <p>Telp: +62_</p>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <p><a href="hero.html">Home</a></p>
+            <p><a href="tentang-kami.html">Tentang</a></p>
+            <p><a href="galeri.html">Galeri</a></p>
+        </div>
+        <div>
+            <h3>Paket Populer</h3>
+            <p><a href="Fun Offroad.Html">Fun Offroad</a></p>
+            <p><a href="Adventure Offroad.HTML">Adventure Offroad</a></p>
+            <p><a href="Corporate Team.HTML">Corporate Team</a></p>
+        </div>
+        <div>
+            <h3>Ikuti Kami</h3>
+            <div class="footer-social">
+                <a href="tentang-kami.html">📘</a><a href="galeri.html">📸</a><a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking">💬</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Outbound Offroad Adventure. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+const navbar = document.getElementById('navbar');
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+window.addEventListener('scroll',()=>{
+    navbar.classList.toggle('scrolled',window.scrollY>50);
+});
+
+menuToggle.onclick=()=>{
+    menuToggle.classList.toggle('active');
+    navMenu.classList.toggle('active');
+};
+</script>
+
+</body>
+</html>
