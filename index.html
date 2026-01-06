@@ -137,6 +137,45 @@ section{padding:40px 8%}
     text-decoration:none;
     transition:0.3s;
 }
+/* ABOUT SECTION */
+.about{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* BALIK POSISI GAMBAR DI DESKTOP */
+.about-img{
+    order: 2; /* gambar ke kanan */
+    flex: 1;
+}
+
+.about-text{
+    order: 1; /* teks ke kiri */
+    flex: 1;
+}
+
+/* GAMBAR */
+.about-img img{
+    width: 100%;
+    border-radius: 18px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px){
+    .about{
+        flex-direction: column;
+    }
+
+    .about-img{
+        order: 1; /* gambar PALING ATAS */
+    }
+
+    .about-text{
+        order: 2;
+    }
+}
+
 .btn-more:hover{background:#ffa726;transform:translateY(-2px)}
 
 /* PACKAGES */
@@ -180,6 +219,82 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
         grid-template-columns:repeat(2, 1fr); /* Tetap 2 kolom di mobile */
     }
 }
+/* ===== FAQ SECTION ===== */
+.faq-section {
+    padding: 80px 8%;
+    background: #000;
+}
+
+.faq-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title h2 {
+    color: #ff9800;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.faq-title p {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.faq-item {
+    background: #111;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    border: 1px solid #222;
+}
+
+.faq-question {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.faq-question:hover {
+    color: #ff9800;
+}
+
+.faq-question span {
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+.faq-item.active .faq-question span {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 24px;
+}
+
+.faq-answer p {
+    color: #ccc;
+    line-height: 1.8;
+    padding-bottom: 20px;
+}
+
+@media(max-width:768px){
+    .faq-title h2 { font-size: 30px; }
+}
+
 </style>
 </head>
 
@@ -193,12 +308,13 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
     <div class="nav-menu" id="navMenu">
         <a href="index.html">Home</a>
         <a href="tentang-kami.html">Tentang</a>
+        <a href="blog.HTML">Blog</a>
         <div class="nav-dropdown">
             <a href="#" id="paketBtn">Paket ▾</a>
             <div class="dropdown-menu">
-                <a href="Fun Offroad.Html">Fun Offroad</a>
-                <a href="Adventure Offroad.HTML">Extreme Adventure</a>
-                <a href="Corporate Team.HTML">Team Corporate</a>
+                <a href="fun-offroad.Html">Fun Offroad</a>
+                <a href="adventure-offroad.HTML">Extreme Adventure</a>
+                <a href="corporate-team.HTML">Team Corporate</a>
             </div>
         </div>
         <a href="galeri.html">Galeri</a>
@@ -248,21 +364,21 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
         <h2>Paket Offroad</h2>
     </div>
     <div class="packages">
-        <a href="Fun Offroad.Html" class="card">
+        <a href="fun-offroad.Html" class="card">
             <img src="aset/Fun Offroad.webp">
             <div class="card-content">
                 <h3>Fun Offroad</h3>
                 <p style="color:#fff">Seru & aman untuk semua kalangan.</p>
             </div>
         </a>
-        <a href="Adventure Offroad.HTML" class="card">
+        <a href="adventure-offroad.HTML" class="card">
             <img src="aset/Adventure Offroad.webp">
             <div class="card-content">
                 <h3>Adventure Offroad</h3>
                 <p style="color:#fff">Medan ekstrem & menantang.</p>
             </div>
         </a>
-        <a href="Corporate Team.HTML" class="card">
+        <a href="corporate-team.HTML" class="card">
             <img src="aset/Corporate Team Building.webp">
             <div class="card-content">
                 <h3>Corporate Team</h3>
@@ -271,6 +387,8 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
         </a>
     </div>
 </section>
+
+
 
 <section id="galeri">
     <div class="section-title">
@@ -286,6 +404,118 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
         <a href="galeri.html" class="btn-more">Lihat Selengkapnya</a>
     </div>
 </section>
+<section class="faq-section">
+    <div class="faq-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Pertanyaan yang sering diajukan seputar Outbound Offroad Adventure</p>
+    </div>
+
+    <div class="faq-container">
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apakah kegiatan offroad aman untuk pemula?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Ya, sangat aman. Kegiatan offroad kami dipandu oleh driver profesional
+                    dan fasilitator berpengalaman. Semua rute disesuaikan dengan tingkat
+                    kemampuan peserta, termasuk untuk pemula.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apakah anak-anak boleh ikut kegiatan offroad?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Boleh, dengan catatan usia minimal dan kondisi fisik memungkinkan.
+                    Untuk anak-anak, kami sarankan memilih paket Fun Offroad dengan rute
+                    yang lebih aman dan santai.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apa saja perlengkapan yang harus dibawa?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Peserta cukup membawa pakaian ganti, sepatu outdoor, dan perlengkapan
+                    pribadi. Helm, kendaraan 4x4, serta perlengkapan keselamatan
+                    sudah kami sediakan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Berapa jumlah minimal peserta?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Jumlah minimal peserta adalah 4 orang per kendaraan.
+                    Untuk corporate atau rombongan besar, kami menyediakan
+                    armada tambahan sesuai kebutuhan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apakah kegiatan tetap berjalan saat hujan?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Ya, kegiatan tetap berjalan karena hujan justru menjadi tantangan
+                    seru dalam offroad. Namun, jika cuaca ekstrem dan tidak aman,
+                    jadwal akan kami sesuaikan demi keselamatan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Bagaimana cara melakukan booking?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Booking dapat dilakukan melalui WhatsApp dengan klik tombol Booking,
+                    atau menghubungi kontak resmi kami. Tim kami akan membantu memilih
+                    paket terbaik sesuai kebutuhan Anda.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script>
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+        const question = item.querySelector(".faq-question");
+
+        question.addEventListener("click", () => {
+            item.classList.toggle("active");
+
+            const answer = item.querySelector(".faq-answer");
+            if (item.classList.contains("active")) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            } else {
+                answer.style.maxHeight = null;
+            }
+        });
+    });
+</script>
 
 <section class="cta-section" id="kontak">
     <h2>Siap Menaklukkan Medan?</h2>
@@ -307,12 +537,13 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
             <p><a href="index.html">Home</a></p>
             <p><a href="tentang-kami.html">Tentang</a></p>
             <p><a href="galeri.html">Galeri</a></p>
+            <p><a href="blog.HTML">Blog</a></p>
         </div>
         <div>
             <h3>Paket Populer</h3>
-            <p><a href="Fun Offroad.Html">Fun Offroad</a></p>
-            <p><a href="Adventure Offroad.HTML">Adventure Offroad</a></p>
-            <p><a href="Corporate Team.HTML">Corporate Team</a></p>
+            <p><a href="fun-offroad.Html">Fun Offroad</a></p>
+            <p><a href="adventure-offroad.HTML">Adventure Offroad</a></p>
+            <p><a href="corporate-team.HTML">Corporate Team</a></p>
         </div>
         <div>
             <h3>Ikuti Kami</h3>
@@ -325,6 +556,7 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
         <p>© 2026 Outbound Offroad Adventure. All Rights Reserved.</p>
     </div>
 </footer>
+
 
 <script>
 const navbar = document.getElementById('navbar');

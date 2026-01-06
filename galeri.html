@@ -168,6 +168,51 @@
             cursor: pointer;
             font-weight: 200;
         }
+/* ===== CTA SECTION SIMPLE ===== */
+.cta-section{
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url('aset/Aksi Jeep melintasi lumpur.webp');
+    background-size: cover;
+    background-position: center;
+    padding: 70px 8%;
+}
+
+.cta-content{
+    text-align: center;
+}
+
+.cta-content h2{
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.cta-btn{
+    display: inline-block;
+    background: #ff9800;
+    color: #000;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.cta-btn:hover{
+    background: #fff;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .cta-content h2{
+        font-size: 22px;
+    }
+    .cta-section{
+        padding: 50px 20px;
+    }
+}
+
 
         /* ===== FOOTER ===== */
         footer { background: #0a0a0a; padding: 80px 8% 40px; color: #ccc; border-top: 1px solid #222; }
@@ -213,13 +258,14 @@
     <div class="nav-menu" id="navMenu">
         <a href="index.html">Home</a>
         <a href="tentang-kami.html">Tentang</a>
+        <a href="blog.HTML">Blog</a>
 
         <div class="nav-dropdown">
             <a href="#" id="paketBtn">Paket ▾</a>
             <div class="dropdown-menu" id="paketMenu">
-                <a href="Fun Offroad.Html">Fun Offroad</a>
-                <a href="Adventure Offroad.HTML">Adventure Offroad</a>
-                <a href="Corporate Team.HTML">Corporate Team</a>
+                <a href="fun-offroad.Html">Fun Offroad</a>
+                <a href="adventure-offroad.HTML">Adventure Offroad</a>
+                <a href="corporate-team.HTML">Corporate Team</a>
             </div>
         </div>
 
@@ -276,6 +322,17 @@
     </div>
 </section>
 
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Siap Menaklukkan Medan?</h2>
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20booking%20Adventure%20Offroad"
+           class="cta-btn">
+            Booking Sekarang
+        </a>
+    </div>
+</section>
+
+
 <footer>
     <div class="footer-container">
         <div>
@@ -288,15 +345,15 @@
             <h3>Quick Links</h3>
             <a href="index.html">Home</a>
             <a href="tentang-kami.html">Tentang Kami</a>
-            <a href="galeri.html">Galeri Foto</a>
-            <a href="#kontak">Kontak Kami</a>
+            <a href="galeri.html">Galeri</a>
+            <p><a href="blog.HTML">Blog</a></p>
         </div>
 
         <div>
             <h3>Paket Pilihan</h3>
-            <a href="Fun Offroad.Html">Fun Offroad</a>
-            <a href="Adventure Offroad.HTML">Extreme Adventure</a>
-            <a href="Corporate Team.HTML">Team Corporate</a>
+            <a href="fun-offroad.Html">Fun Offroad</a>
+            <a href="adventure-offroad.HTML">Extreme Adventure</a>
+            <a href="corporate-team.HTML">Team Corporate</a>
         </div>
 
         <div>
