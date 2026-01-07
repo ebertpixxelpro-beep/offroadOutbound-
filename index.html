@@ -116,6 +116,58 @@ body{background:#000;color:#fff}
 .btn-primary{background:#ff9800;color:#000}
 .btn-secondary{border:2px solid #fff;color:#fff}
 
+
+/* FLOATING BUTTON WRAPPER */
+.floating-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+}
+
+/* BUTTON STYLE */
+.btn-float {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+/* BACK TO TOP */
+.back-top {
+    background: #000;
+}
+
+.back-top:hover {
+    background: #444;
+    transform: translateY(-4px);
+}
+
+/* WHATSAPP */
+.wa-btn {
+    background: #25D366;
+}
+
+.wa-btn:hover {
+    background: #1ebe5d;
+    transform: translateY(-4px);
+}
+
+/* SMOOTH SCROLL */
+html {
+    scroll-behavior: smooth;
+}
+
 /* ================= SECTION ================= */
 section{padding:40px 8%}
 .section-title{text-align:center;margin-bottom:30px}
@@ -329,9 +381,40 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
         <div class="hero-buttons">
             <a href="#paket" class="btn-primary">Lihat Paket</a>
             <a href="#kontak" class="btn-secondary">Hubungi Kami</a>
+             
+
+            <!-- FLOATING BUTTON -->
+<div class="floating-btn">
+
+    <!-- BACK TO TOP -->
+    <a href="index.html" class="btn-float back-top" title="Kembali ke Atas">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking"
+       class="btn-float wa-btn"
+       title="Chat WhatsApp"
+       target="_blank">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+</div>
         </div>
     </div>
 </section>
+
+<script>
+const backTop = document.querySelector('.back-top');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        backTop.style.display = 'flex';
+    } else {
+        backTop.style.display = 'none';
+    }
+});
+</script>
 
 <section id="tentang">
     <div class="section-title">
@@ -545,12 +628,45 @@ footer{background:#111;padding:50px 8% 40px;color:#ccc}
             <p><a href="adventure-offroad.HTML">Adventure Offroad</a></p>
             <p><a href="corporate-team.HTML">Corporate Team</a></p>
         </div>
-        <div>
-            <h3>Ikuti Kami</h3>
-            <div class="footer-social">
-                <a href="tentang-kami.html">📘</a><a href="galeri.html">📸</a><a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking">💬</a>
-            </div>
-        </div>
+ <div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <h3>Sosial Media</h3>
+    <p>Ikuti & hubungi kami melalui platform favorit Anda:</p>
+
+    <div style="display:flex; gap:18px; margin-top:15px; font-size:26px;">
+        
+        <!-- Instagram -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Instagram"
+           title="Instagram"
+           style="color:#E1306C;">
+            <i class="bi bi-instagram"></i>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Facebook"
+           title="Facebook"
+           style="color:#1877F2;">
+            <i class="bi bi-facebook"></i>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20dari%20TikTok"
+           title="TikTok"
+           style="color:#FFFFFF;">
+            <i class="bi bi-tiktok"></i>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking"
+           title="WhatsApp"
+           style="color:#25D366;">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+
+    </div>
+</div>
+
     </div>
     <div class="footer-bottom">
         <p>© 2026 Outbound Offroad Adventure. All Rights Reserved.</p>
