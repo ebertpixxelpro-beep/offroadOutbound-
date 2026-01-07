@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Outbound Offroad Adventure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif}
+body{background:#000;color:#fff}
+
+/* ================= NAVBAR ================= */
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:16px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:999;
+    background:rgba(0,0,0,0.2);
+    backdrop-filter:blur(10px);
+    transition:0.4s
+}
+.navbar.scrolled{
+    background:rgba(0,0,0,0.9);
+    box-shadow:0 10px 30px rgba(0,0,0,0.7)
+}
+.logo{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-decoration:none;
+    color:#ff9800
+}
+.logo span{color:#fff}
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:28px
+}
+.nav-menu a{
+    position:relative;
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:6px 0
+}
+.nav-menu a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#ff9800;
+    transition:0.3s
+}
+.nav-menu a:hover::after{width:100%}
+.nav-menu a:hover{color:#ff9800}
+
+.nav-menu .cta{
+    padding:10px 22px;
+    border-radius:30px;
+    background:#ff9800;
+    color:#000;
+    font-weight:700
+}
+
+/* ================= DROPDOWN ================= */
+.nav-dropdown{position:relative}
+.dropdown-menu{
+    position:absolute;
+    top:40px;
+    left:0;
+    background:#111;
+    border-radius:12px;
+    min-width:200px;
+    padding:10px 0;
+    display:none;
+    flex-direction:column;
+    box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    z-index:1000
+}
+.dropdown-menu a{padding:12px 20px;color:#fff;font-size:13px;text-transform:none}
+.dropdown-menu a:hover{background:#ff9800;color:#000}
+.nav-dropdown:hover .dropdown-menu{display:flex}
+
+/* ================= MOBILE MENU ================= */
+.menu-toggle{
+    display:none;
+    width:30px;
+    height:22px;
+    flex-direction:column;
+    justify-content:space-between;
+    cursor:pointer
+}
+.menu-toggle span{height:3px;background:#fff;border-radius:5px;transition:0.4s}
+.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px)}
+
+/* ================= HERO ================= */
+.hero{height:100vh;background:linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('aset/mobol.webp');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.hero-content{max-width:800px}
+.hero h1{font-size:52px;font-weight:800;margin-bottom:20px;text-transform:uppercase}
+.hero p{font-size:18px;color:#ddd;margin-bottom:35px;line-height:1.7}
+.hero-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+.hero-buttons a{padding:14px 32px;border-radius:30px;font-weight:700;text-decoration:none}
+.btn-primary{background:#ff9800;color:#000}
+.btn-secondary{border:2px solid #fff;color:#fff}
+
+
+/* FLOATING BUTTON WRAPPER */
+.floating-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+}
+
+/* BUTTON STYLE */
+.btn-float {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+/* BACK TO TOP */
+.back-top {
+    background: #000;
+}
+
+.back-top:hover {
+    background: #444;
+    transform: translateY(-4px);
+}
+
+/* WHATSAPP */
+.wa-btn {
+    background: #25D366;
+}
+
+.wa-btn:hover {
+    background: #1ebe5d;
+    transform: translateY(-4px);
+}
+
+/* SMOOTH SCROLL */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ================= SECTION ================= */
+section{padding:40px 8%}
+.section-title{text-align:center;margin-bottom:30px}
+.section-title h2{font-size:36px;color:#ff9800;margin-bottom:10px}
+.section-title p{color:#ccc}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.about img{width:100%;border-radius:15px;object-fit:cover}
+.about p{line-height:1.8;color:#ddd;margin-bottom:15px}
+.btn-more{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 30px;
+    border-radius:30px;
+    background:#ff9800;
+    color:#000;
+    font-weight:700;
+    text-decoration:none;
+    transition:0.3s;
+}
+/* ABOUT SECTION */
+.about{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* BALIK POSISI GAMBAR DI DESKTOP */
+.about-img{
+    order: 2; /* gambar ke kanan */
+    flex: 1;
+}
+
+.about-text{
+    order: 1; /* teks ke kiri */
+    flex: 1;
+}
+
+/* GAMBAR */
+.about-img img{
+    width: 100%;
+    border-radius: 18px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px){
+    .about{
+        flex-direction: column;
+    }
+
+    .about-img{
+        order: 1; /* gambar PALING ATAS */
+    }
+
+    .about-text{
+        order: 2;
+    }
+}
+
+.btn-more:hover{background:#ffa726;transform:translateY(-2px)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
+.card{background:#111;border-radius:15px;overflow:hidden;text-decoration:none}
+.card img{width:100%;height:200px;object-fit:cover}
+.card-content{padding:20px}
+.card-content h3{color:#ff9800;margin-bottom:10px}
+
+/* GALLERY */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:15px;
+}
+.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px}
+
+/* CTA */
+.cta-section{background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('aset/panjang.webp');background-size:cover;background-position:center;text-align:center;padding:60px 8%}
+.cta-section h2{font-size:40px;margin-bottom:20px}
+
+/* FOOTER */
+footer{background:#111;padding:50px 8% 40px;color:#ccc}
+.footer-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;margin-bottom:40px}
+.footer-container h3{color:#ff9800;margin-bottom:20px;font-size:18px}
+.footer-container p, .footer-container a{color:#aaa;text-decoration:none;font-size:14px;line-height:1.6}
+.footer-container a:hover{color:#ff9800}
+.footer-social{display:flex;gap:15px;margin-top:10px}
+.footer-social a{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;background:#222;border-radius:50%;color:#ff9800;font-size:18px;transition:0.3s}
+.footer-bottom{text-align:center;border-top:1px solid #333;padding-top:20px;color:#777;font-size:13px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .hero h1{font-size:36px}
+    .about{grid-template-columns:1fr}
+    .nav-menu{position:absolute;top:75px;right:-100%;background:#000;flex-direction:column;width:260px;padding:30px;gap:20px;border-radius:0 0 0 20px;transition:0.4s}
+    .nav-menu.active{right:0}
+    .menu-toggle{display:flex}
+    
+    .gallery{
+        grid-template-columns:repeat(2, 1fr); /* Tetap 2 kolom di mobile */
+    }
+}
+/* ===== FAQ SECTION ===== */
+.faq-section {
+    padding: 80px 8%;
+    background: #000;
+}
+
+.faq-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-title h2 {
+    color: #ff9800;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.faq-title p {
+    color: #aaa;
+    font-size: 14px;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+.faq-item {
+    background: #111;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    border: 1px solid #222;
+}
+
+.faq-question {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.faq-question:hover {
+    color: #ff9800;
+}
+
+.faq-question span {
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+.faq-item.active .faq-question span {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 24px;
+}
+
+.faq-answer p {
+    color: #ccc;
+    line-height: 1.8;
+    padding-bottom: 20px;
+}
+
+@media(max-width:768px){
+    .faq-title h2 { font-size: 30px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OFF<span>ROAD</span></a>
+    <div class="menu-toggle" id="menuToggle">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="nav-menu" id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="tentang-kami.html">Tentang</a>
+        <a href="blog.HTML">Blog</a>
+        <div class="nav-dropdown">
+            <a href="#" id="paketBtn">Paket ▾</a>
+            <div class="dropdown-menu">
+                <a href="fun-offroad.Html">Fun Offroad</a>
+                <a href="adventure-offroad.HTML">Extreme Adventure</a>
+                <a href="corporate-team.HTML">Team Corporate</a>
+            </div>
+        </div>
+        <a href="galeri.html">Galeri</a>
+      <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="cta">Booking</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Outbound Offroad Adventure</h1>
+        <p>Pengalaman seru, menantang, dan membangun teamwork di alam terbuka.</p>
+        <div class="hero-buttons">
+            <a href="#paket" class="btn-primary">Lihat Paket</a>
+            <a href="#kontak" class="btn-secondary">Hubungi Kami</a>
+             
+
+            <!-- FLOATING BUTTON -->
+<div class="floating-btn">
+
+    <!-- BACK TO TOP -->
+    <a href="index.html" class="btn-float back-top" title="Kembali ke Atas">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking"
+       class="btn-float wa-btn"
+       title="Chat WhatsApp"
+       target="_blank">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+</div>
+        </div>
+    </div>
+</section>
+
+<script>
+const backTop = document.querySelector('.back-top');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        backTop.style.display = 'flex';
+    } else {
+        backTop.style.display = 'none';
+    }
+});
+</script>
+
+<section id="tentang">
+    <div class="section-title">
+        <h2>Tentang Kami</h2>
+        <p>Outbound offroad profesional & aman</p>
+    </div>
+
+    <div class="about">
+                <div class="about-img">
+            <img src="aset/mobil.webp" alt="Tentang Kami">
+        </div>
+        <div class="about-text">
+            <p>
+                Kami adalah penyedia layanan outbound offroad terpercaya yang berdedikasi untuk memberikan pengalaman petualangan luar ruang yang tak terlupakan. Dengan armada JEEP 4x4 yang tangguh dan selalu dalam kondisi prima, kami siap membawa Anda menembus jalur-jalur ekstrem, mulai dari hutan pinus yang asri hingga lintasan berlumpur yang menantang adrenalin.
+            </p>
+            <p>
+                Didukung oleh driver profesional yang sangat menguasai medan dan fasilitator yang ahli dalam pengembangan tim, kami tidak hanya menawarkan sekadar perjalanan, melainkan juga simulasi kerja sama tim dan keberanian. Kami percaya bahwa setiap tantangan di jalur offroad adalah pelajaran berharga untuk memperkuat soliditas tim Anda.
+            </p>
+            <p>
+                Keamanan adalah prioritas utama kami. Setiap armada kami dilengkapi dengan standar keselamatan tinggi dan kru kami telah melalui pelatihan khusus untuk menangani berbagai situasi di medan sulit. Bersama kami, Anda akan mendapatkan perpaduan antara wisata alam, olahraga ekstrem, dan keceriaan tanpa rasa khawatir.
+            </p>
+            <a href="tentang-kami.html" class="btn-more">Selengkapnya</a>
+        </div> 
+
+    </div>
+</section>
+
+<section id="paket">
+    <div class="section-title">
+        <h2>Paket Offroad</h2>
+    </div>
+    <div class="packages">
+        <a href="fun-offroad.Html" class="card">
+            <img src="aset/Fun Offroad.webp">
+            <div class="card-content">
+                <h3>Fun Offroad</h3>
+                <p style="color:#fff">Seru & aman untuk semua kalangan.</p>
+            </div>
+        </a>
+        <a href="adventure-offroad.HTML" class="card">
+            <img src="aset/Adventure Offroad.webp">
+            <div class="card-content">
+                <h3>Adventure Offroad</h3>
+                <p style="color:#fff">Medan ekstrem & menantang.</p>
+            </div>
+        </a>
+        <a href="corporate-team.HTML" class="card">
+            <img src="aset/Corporate Team Building.webp">
+            <div class="card-content">
+                <h3>Corporate Team</h3>
+                <p style="color:#fff">Team building perusahaan.</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+
+
+<section id="galeri">
+    <div class="section-title">
+        <h2>Galeri</h2>
+    </div>
+    <div class="gallery">
+        <img src="aset/Aksi Jeep melintasi lumpur.webp">
+        <img src="aset/Pemandangan puncak gunung.webp">
+        <img src="aset/Tim Corporate Gathering.webp">
+        <img src="aset/Sunset Offroad.webp">
+    </div>
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="galeri.html" class="btn-more">Lihat Selengkapnya</a>
+    </div>
+</section>
+<section class="faq-section">
+    <div class="faq-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Pertanyaan yang sering diajukan seputar Outbound Offroad Adventure</p>
+    </div>
+
+    <div class="faq-container">
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apakah kegiatan offroad aman untuk pemula?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Ya, sangat aman. Kegiatan offroad kami dipandu oleh driver profesional
+                    dan fasilitator berpengalaman. Semua rute disesuaikan dengan tingkat
+                    kemampuan peserta, termasuk untuk pemula.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apakah anak-anak boleh ikut kegiatan offroad?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Boleh, dengan catatan usia minimal dan kondisi fisik memungkinkan.
+                    Untuk anak-anak, kami sarankan memilih paket Fun Offroad dengan rute
+                    yang lebih aman dan santai.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apa saja perlengkapan yang harus dibawa?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Peserta cukup membawa pakaian ganti, sepatu outdoor, dan perlengkapan
+                    pribadi. Helm, kendaraan 4x4, serta perlengkapan keselamatan
+                    sudah kami sediakan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Berapa jumlah minimal peserta?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Jumlah minimal peserta adalah 4 orang per kendaraan.
+                    Untuk corporate atau rombongan besar, kami menyediakan
+                    armada tambahan sesuai kebutuhan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Apakah kegiatan tetap berjalan saat hujan?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Ya, kegiatan tetap berjalan karena hujan justru menjadi tantangan
+                    seru dalam offroad. Namun, jika cuaca ekstrem dan tidak aman,
+                    jadwal akan kami sesuaikan demi keselamatan.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Bagaimana cara melakukan booking?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                <p>
+                    Booking dapat dilakukan melalui WhatsApp dengan klik tombol Booking,
+                    atau menghubungi kontak resmi kami. Tim kami akan membantu memilih
+                    paket terbaik sesuai kebutuhan Anda.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script>
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+        const question = item.querySelector(".faq-question");
+
+        question.addEventListener("click", () => {
+            item.classList.toggle("active");
+
+            const answer = item.querySelector(".faq-answer");
+            if (item.classList.contains("active")) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            } else {
+                answer.style.maxHeight = null;
+            }
+        });
+    });
+</script>
+
+<section class="cta-section" id="kontak">
+    <h2>Siap Menaklukkan Medan?</h2>
+    <div class="hero-buttons">
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="btn-primary">Booking Sekarang</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>OFFROAD ADVENTURE</h3>
+            <p>Jalan Raya Adventure No.12, Kota Malang, Indonesia</p>
+            <p>Email: info@offroad.com</p>
+            <p>Telp: +62_</p>
+        </div>
+        <div>
+            <h3>Quick Links</h3>
+            <p><a href="index.html">Home</a></p>
+            <p><a href="tentang-kami.html">Tentang</a></p>
+            <p><a href="galeri.html">Galeri</a></p>
+            <p><a href="blog.HTML">Blog</a></p>
+        </div>
+        <div>
+            <h3>Paket Populer</h3>
+            <p><a href="fun-offroad.Html">Fun Offroad</a></p>
+            <p><a href="adventure-offroad.HTML">Adventure Offroad</a></p>
+            <p><a href="corporate-team.HTML">Corporate Team</a></p>
+        </div>
+ <div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <h3>Sosial Media</h3>
+    <p>Ikuti & hubungi kami melalui platform favorit Anda:</p>
+
+    <div style="display:flex; gap:18px; margin-top:15px; font-size:26px;">
+        
+        <!-- Instagram -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Instagram"
+           title="Instagram"
+           style="color:#E1306C;">
+            <i class="bi bi-instagram"></i>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Facebook"
+           title="Facebook"
+           style="color:#1877F2;">
+            <i class="bi bi-facebook"></i>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20dari%20TikTok"
+           title="TikTok"
+           style="color:#FFFFFF;">
+            <i class="bi bi-tiktok"></i>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking"
+           title="WhatsApp"
+           style="color:#25D366;">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+
+    </div>
+</div>
+
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Outbound Offroad Adventure. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<script>
+const navbar = document.getElementById('navbar');
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+window.addEventListener('scroll',()=>{
+    navbar.classList.toggle('scrolled',window.scrollY>50);
+});
+
+menuToggle.onclick=()=>{
+    menuToggle.classList.toggle('active');
+    navMenu.classList.toggle('active');
+};
+</script>
+
+</body>
+</html>

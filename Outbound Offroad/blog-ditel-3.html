@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serunya Offroad di Alam Terbuka | Offroad Adventure</title>
+
+<style>
+      .fab-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.fab-btn {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    box-shadow: 0 6px 18px rgba(0,0,0,.35);
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.fab-btn:hover {
+    transform: scale(1.1);
+}
+
+.fab-wa {
+    background: #25D366;
+}
+
+/* ukuran ikon svg */
+.fab-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.fab-top {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fab-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{
+    background:#000;
+    color:#fff;
+    padding-top:80px; /* FIX NAVBAR */
+}
+
+      /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 16px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+        /* ===== MENU TOGGLE (HAMBURGER) ===== */
+.menu-toggle{
+    display:none;
+    flex-direction:column;
+    gap:6px;
+    cursor:pointer;
+}
+
+.menu-toggle span{
+    width:26px;
+    height:3px;
+    background:#fff;
+    border-radius:3px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .menu-toggle{
+        display:flex;
+    }
+
+    .nav-menu{
+        position:fixed;
+        top:70px;
+        right:-100%;
+        background:#000;
+        width:100%;
+        height:calc(100vh - 70px);
+        flex-direction:column;
+        align-items:flex-start;
+        padding:30px;
+        transition:.4s;
+        gap:20px;
+    }
+
+    .nav-menu.active{
+        right:0;
+    }
+
+    .dropdown-menu{
+        position:static;
+        box-shadow:none;
+        padding-left:15px;
+    }
+}
+
+        .logo { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #ff9800; text-decoration: none; white-space: nowrap; }
+        .logo span { color: #fff; }
+        .nav-menu { display: flex; align-items: center; gap: 26px; }
+        .nav-menu a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-menu a:hover { color: #ff9800; }
+        .nav-menu .cta { background: #ff9800; color: #000; padding: 10px 22px; border-radius: 30px; }
+        
+        /* DROPDOWN */
+        .nav-dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute; top: 100%; left: 0; background: #111; border-radius: 8px; min-width: 180px;
+            display: none; flex-direction: column; padding: 10px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .dropdown-menu a { padding: 12px 20px; font-size: 13px; text-transform: none; }
+        .dropdown-menu.show { display: flex; }/* ===== HERO ===== */
+.hero{
+    height:45vh;
+    background:
+        linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+        url("aset/Aksi Jeep melintasi lumpur.webp");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+.hero h1{
+    font-size:38px;
+    color:#ff9800;
+    margin-bottom:15px;
+}
+.hero-btns a{
+    display:inline-block;
+    margin:0 6px;
+    padding:10px 26px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:700;
+    text-decoration:none;
+}
+.btn-home{background:#fff;color:#000}
+.btn-blog{background:#ff9800;color:#000}
+
+/* ===== BLOG DETAIL ===== */
+.blog-detail{
+    background:#000;
+    padding:90px 6%;
+    color:#ddd;
+}
+
+/* HEADER */
+.blog-header{
+    text-align:center;
+    max-width:900px;
+    margin:0 auto 40px;
+}
+
+.blog-title{
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.blog-meta{
+    font-size:14px;
+    color:#aaa;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+
+
+/* IMAGE */
+.blog-image{
+    max-width:600px;        /* INI KUNCI */
+    width:100%;
+    margin:0 auto 20px;
+}
+
+
+.blog-image img{
+    width:100%;
+    height:auto;
+    border-radius:14px;
+}
+
+
+
+
+/* ===== ISI TEKS 2 DERET ===== */
+.article-text{
+    max-width:1200px;
+    margin:0 auto 50px;
+    column-count:2;
+    column-gap:60px;
+    column-rule:1px solid #222;
+}
+
+.article-text p{
+    break-inside:avoid;
+    line-height:1.9;
+    margin-bottom:18px;
+}
+
+/* QUOTE */
+.quote{
+    max-width:1000px;
+    margin:60px auto;
+    padding:25px 30px;
+    background:#111;
+    border-left:4px solid #ff9800;
+    font-style:italic;
+}
+
+/* SUB TITLE */
+.sub-title{
+    max-width:1000px;
+    margin:60px auto 15px;
+    font-size:24px;
+    color:#ff9800;
+}
+
+/* TEXT NORMAL */
+.single-text{
+    max-width:1000px;
+    margin:0 auto;
+    line-height:1.9;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+    .article-text{
+        column-count:1;
+        column-rule:none;
+    }
+
+    .blog-title{
+        font-size:26px;
+    }
+}
+
+/* ===== CTA ===== */
+.cta-section{
+    background:
+        linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+        url("aset/Adventure.webp");
+    background-size:cover;
+    background-position:center;
+    padding:70px 8%;
+    text-align:center;
+}
+.cta-section h2{
+    font-size:32px;
+    margin-bottom:20px;
+}
+.cta-btn{
+    background:#ff9800;
+    color:#000;
+    padding:14px 36px;
+    border-radius:30px;
+    font-weight:700;
+    text-decoration:none;
+}
+.cta-btn:hover{background:#fff}
+
+/* ===== footer ===== */
+.footer{
+    background:#0b0b0b;
+    padding:70px 8% 25px;
+}
+
+.footer-container{
+    display:grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap:40px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.footer-box h3{
+    color:#ff9800;
+    margin-bottom:16px;
+    font-size:18px;
+}
+
+.footer-box p{
+    color:#bbb;
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:6px;
+}
+
+.footer-box a{
+    display:block;
+    color:#aaa;
+    font-size:14px;
+    margin-bottom:8px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.footer-box a:hover{
+    color:#ff9800;
+    transform:translateX(4px);
+}
+
+/* SOSIAL */
+.social-icons{
+    display:flex;
+    gap:12px;
+}
+
+.social{
+    width:40px;
+    height:40px;
+    background:#1a1a1a;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.social:hover{
+    background:#ff9800;
+    color:#000;
+}
+
+/* BOTTOM */
+.footer-bottom{
+    border-top:1px solid #222;
+    margin-top:40px;
+    padding-top:20px;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .footer-container{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<script>
+    const paketBtn = document.getElementById("paketBtn");
+    const paketMenu = document.getElementById("paketMenu");
+
+    paketBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    paketMenu.classList.toggle("show");
+});
+</script>
+
+<nav class="navbar">
+    <a href="index.html" class="logo">OFF<span>ROAD</span></a>
+
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="nav-menu" id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="tentang-kami.html">Tentang</a>
+        <a href="blog.HTML">Blog</a>
+
+        <div class="nav-dropdown">
+            <a href="#" id="paketBtn">Paket ▾</a>
+            <div class="dropdown-menu" id="paketMenu">
+                <a href="fun-offroad.Html">Fun Offroad</a>
+                <a href="adventure-offroad.HTML">Adventure Offroad</a>
+                <a href="corporate-team.HTML">Corporate Team</a>
+            </div>
+        </div>
+
+        <a href="galeri.html">Galeri</a>
+     <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="cta">Booking</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <h1>Artikel Offroad Adventure</h1>
+        <div class="hero-btns">
+            <a href="index.html" class="btn-home">Home</a>
+            <a href="blog.HTML" class="btn-blog">Blog</a>
+        </div>
+    </div>
+</section>
+<!-- BLOG DETAIL -->
+<section class="blog-detail">
+
+    <!-- HEADER -->
+    <div class="blog-header">
+        <h1 class="blog-title">Outbound Offroad untuk Team Building</h1>
+        <div class="blog-meta">
+            <span>📅 12 Januari 2026</span>
+            <span>✍️ Admin Offroad</span>
+        </div>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="blog-image">
+        <img src="aset/Camping Ground.webp" alt="Outbound Offroad Team Building">
+    </div>
+
+    <!-- ISI TEKS 2 DERET -->
+    <div class="article-text">
+
+        <p>
+        Outbound offroad merupakan salah satu metode team building yang
+        efektif dan menyenangkan. Kegiatan ini memadukan tantangan alam
+        dengan aktivitas kelompok yang dirancang untuk meningkatkan
+        kerja sama, komunikasi, dan kepemimpinan dalam tim.
+        </p>
+
+        <p>
+        Berbeda dengan outbound konvensional, outbound offroad menawarkan
+        pengalaman yang lebih menantang melalui jalur ekstrem seperti
+        tanjakan curam, lintasan berlumpur, dan medan berbatu. Tantangan
+        ini mendorong peserta untuk saling membantu dan mengambil keputusan
+        bersama.
+        </p>
+
+        <p>
+        Selama perjalanan offroad, peserta akan dihadapkan pada situasi
+        yang membutuhkan koordinasi dan kepercayaan antar anggota tim.
+        Setiap individu memiliki peran penting, baik sebagai pengambil
+        keputusan maupun pendukung dalam menghadapi rintangan.
+        </p>
+
+        <p>
+        Aktivitas outbound offroad juga mampu melatih kepemimpinan secara
+        alami. Peserta belajar memimpin, mengatur strategi, dan tetap tenang
+        dalam kondisi penuh tekanan. Hal ini sangat relevan dengan dunia
+        kerja yang menuntut kerja sama dan ketangguhan mental.
+        </p>
+
+        <p>
+        Faktor keselamatan tetap menjadi prioritas utama dalam kegiatan ini.
+        Seluruh peserta akan mendapatkan briefing keselamatan, didampingi
+        oleh driver dan fasilitator profesional, serta menggunakan kendaraan
+        yang telah melalui pengecekan menyeluruh.
+        </p>
+
+        <p>
+        Outbound offroad cocok untuk berbagai jenis organisasi, mulai dari
+        perusahaan, komunitas, hingga institusi pendidikan. Kegiatan ini
+        dapat disesuaikan dengan tujuan acara, baik untuk membangun
+        kekompakan tim, meningkatkan motivasi, maupun sekadar refreshing.
+        </p>
+
+        <p>
+        Selain manfaat pengembangan tim, peserta juga akan menikmati
+        keindahan alam yang masih asri. Suasana alam terbuka membantu
+        mengurangi stres dan menciptakan pengalaman kebersamaan yang
+        berkesan dan sulit dilupakan.
+        </p>
+
+        <p>
+        Dengan konsep yang menantang namun tetap aman, outbound offroad
+        menjadi pilihan tepat untuk kegiatan team building yang berbeda,
+        seru, dan memberikan dampak positif jangka panjang bagi tim.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+    <h2>Siap Menaklukkan Medan?</h2>
+<a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20booking%20Adventure%20Offroad"
+           class="cta-btn">
+            Booking Sekarang
+        </a>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div class="footer-box">
+      <h3 class="footer-logo">OFFROAD ADVENTURE</h3>
+      <p>Jalan Raya Adventure No.12, Kota Malang, Indonesia</p>
+      <p>Email: info@offroad.com</p>
+      <p>Telp: +62 812-3456-7890</p>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="footer-box">
+      <h3>Quick Links</h3>
+      <a href="index.html">Home</a>
+      <a href="tentang-kami.html">Tentang</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="blog.HTML">Blog</a>
+    </div>
+
+    <!-- PAKET -->
+    <div class="footer-box">
+      <h3>Paket Populer</h3>
+      <a href="fun-offroad.Html">Fun Offroad</a>
+      <a href="adventure-offroad.HTML">Adventure Offroad</a>
+      <a href="corporate-team.HTML">Corporate Team</a>
+    </div>
+
+ <div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <h3>Sosial Media</h3>
+    <p>Ikuti & hubungi kami melalui platform favorit Anda:</p>
+
+    <div style="display:flex; gap:18px; margin-top:15px; font-size:26px;">
+        
+        <!-- Instagram -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Instagram"
+           title="Instagram"
+           style="color:#E1306C;">
+            <i class="bi bi-instagram"></i>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Facebook"
+           title="Facebook"
+           style="color:#1877F2;">
+            <i class="bi bi-facebook"></i>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20dari%20TikTok"
+           title="TikTok"
+           style="color:#FFFFFF;">
+            <i class="bi bi-tiktok"></i>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking"
+           title="WhatsApp"
+           style="color:#25D366;">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+
+    </div>
+</div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Outbound Offroad Adventure. All Rights Reserved.
+  </div>
+</footer>
+
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+menuToggle.onclick = () => {
+    navMenu.classList.toggle("active");
+};
+</script>
+
+<div class="fab-container">
+
+    <!-- BACK TO TOP -->
+    <div class="fab-btn fab-top" id="backToTop" onclick="backToTop()">
+        <!-- SVG PANAH -->
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="white" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5" />
+            <path d="M5 12l7-7 7 7" />
+        </svg>
+    </div>
+
+    <!-- WHATSAPP -->
+     <div class="fab-btn fab-wa">
+    <!-- SVG DI SINI -->
+   
+
+<a href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20bertanya"
+   target="_blank">
+<svg viewBox="0 0 512 512" width="28" height="28">
+  <!-- BALON CHAT -->
+  <path fill="#FFFFFF" d="M256 32C132.3 32 32 128.9 32 248c0 50.6 18.1 97.3 48.3 134.2L48 480l101.6-30.1c33.4 18.3 71.8 28.7 112.4 28.7 123.7 0 224-96.9 224-216.6S379.7 32 256 32z"/>
+  
+  <!-- LOGO WA -->
+  <path fill="#25D366" d="M256 64c-105.9 0-192 83.6-192 184 0 46.3 18.2 89.4 48.4 121.6L96 416l50.5-14.7C177.6 420.8 215.8 432 256 432c105.9 0 192-83.6 192-184S361.9 64 256 64z"/>
+
+  <!-- TELEPON WA -->
+  <path fill="#FFFFFF" d="M341.6 299.2c-5.2-2.6-30.6-15-35.3-16.7-4.7-1.7-8.1-2.6-11.5 2.6-3.4 5.2-13.3 16.7-16.3 20.1-3 3.4-6 3.9-11.2 1.3-30.6-15-50.6-26.8-70.7-60.8-5.2-8.9 5.2-8.3 15-28.2 1.7-3.4.9-6.5-.4-9.1-1.3-2.6-11.5-27.4-15.8-37.6-4.3-10.4-8.7-9.1-11.5-9.1-3 0-6.5-.4-10-.4s-9.1 1.3-13.9 6.5c-4.8 5.2-18.3 17.9-18.3 43.7s18.7 50.8 21.3 54.2c2.6 3.4 36.9 56.3 89.5 78.9 12.5 5.4 22.3 8.6 29.9 11 12.6 4 24.1 3.4 33.2 2.1 10.1-1.5 30.6-12.5 34.9-24.6 4.3-12.1 4.3-22.5 3-24.6-1.3-2.1-4.7-3.4-9.9-6z"/>
+</svg>
+</a>
+</div>
+
+</div>
+
+
+<script>
+const topBtn = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        topBtn.classList.add("show");
+    } else {
+        topBtn.classList.remove("show");
+    }
+});
+
+function backToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
+
+
+</body>
+</html>

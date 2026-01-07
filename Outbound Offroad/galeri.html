@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri | Outbound Offroad Adventure</title>
+
+    <style>
+.fab-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.fab-btn {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    box-shadow: 0 6px 18px rgba(0,0,0,.35);
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.fab-btn:hover {
+    transform: scale(1.1);
+}
+
+.fab-wa {
+    background: #25D366;
+}
+
+/* ukuran ikon svg */
+.fab-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.fab-top {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fab-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        body {
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            transition: 0.5s;
+            z-index: 1000;
+        }
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 12px 8%;
+            border-bottom: 1px solid #333;
+        }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: 2px; color: #ff9800; text-decoration: none; }
+        .logo span { color: #fff; }
+        .nav-menu { display: flex; align-items: center; gap: 26px; }
+        .nav-menu a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-menu a:hover { color: #ff9800; }
+        .nav-menu .cta { background: #ff9800; color: #000; padding: 10px 22px; border-radius: 30px; }
+        
+        /* Dropdown */
+        .nav-dropdown { position: relative; }
+        .dropdown-menu { 
+            position: absolute; top: 100%; left: 0; 
+            background: #111; border-radius: 8px; min-width: 180px; 
+            display: none; flex-direction: column; padding: 10px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .dropdown-menu a { padding: 12px 20px; font-size: 13px; text-transform: none; }
+        .dropdown-menu.show { display: flex; }
+
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .menu-toggle span { width: 26px; height: 3px; background: #fff; border-radius: 5px; }
+
+        /* ===== HEADER GALERI ===== */
+        .gallery-header {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('aset/galeri-hero.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .gallery-header h1 { 
+            font-size: clamp(32px, 5vw, 56px); 
+            color: #ff9800; 
+            text-transform: uppercase; 
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        }
+        .gallery-header p { color: #ccc; font-size: clamp(16px, 2vw, 20px); max-width: 600px; margin: 0 auto; }
+
+        /* ===== GRID GALERI ===== */
+        .gallery-section {
+            padding: 80px 8%;
+            background: #000;
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 350px;
+            cursor: pointer;
+            border: 1px solid #222;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .gallery-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 152, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.4s ease;
+        }
+        .gallery-overlay i {
+            font-size: 40px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .gallery-overlay span {
+            color: #000;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateY(20px);
+            transition: 0.4s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-item:hover .gallery-overlay span {
+            transform: translateY(0);
+        }
+
+        /* ===== LIGHTBOX MODAL ===== */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 40px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255,152,0,0.2);
+            transform: scale(0.9);
+            transition: 0.3s;
+        }
+        .lightbox.active img { transform: scale(1); }
+        .close-lightbox {
+            position: absolute;
+            top: 30px; right: 40px;
+            color: #ff9800;
+            font-size: 50px;
+            cursor: pointer;
+            font-weight: 200;
+        }
+/* ===== CTA SECTION SIMPLE ===== */
+.cta-section{
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url('aset/Aksi Jeep melintasi lumpur.webp');
+    background-size: cover;
+    background-position: center;
+    padding: 70px 8%;
+}
+
+.cta-content{
+    text-align: center;
+}
+
+.cta-content h2{
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.cta-btn{
+    display: inline-block;
+    background: #ff9800;
+    color: #000;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.cta-btn:hover{
+    background: #fff;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .cta-content h2{
+        font-size: 22px;
+    }
+    .cta-section{
+        padding: 50px 20px;
+    }
+}
+
+/* FLOATING WRAPPER */
+.floating-wrapper{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 3000;
+}
+
+/* COMMON FAB */
+.fab{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+}
+
+/* BACK TO TOP */
+.backtop{
+    background: #000;
+    color: #fff;
+    font-size: 26px;
+    display: none;
+}
+
+.backtop.show{
+    display: flex;
+}
+
+.backtop:hover{
+    transform: translateY(-3px);
+    background: #111;
+}
+
+/* WHATSAPP */
+.whatsapp{
+    background: #25D366;
+}
+
+.whatsapp:hover{
+    transform: translateY(-3px);
+    background: #1ebe5d;
+}
+
+
+
+        /* ===== FOOTER ===== */
+        footer { background: #0a0a0a; padding: 80px 8% 40px; color: #ccc; border-top: 1px solid #222; }
+        .footer-container { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 40px; }
+        .footer-container h3 { color: #ff9800; margin-bottom: 20px; letter-spacing: 1px; }
+        .footer-container p { font-size: 14px; line-height: 1.6; }
+        .footer-container a { color: #aaa; text-decoration: none; transition: 0.3s; display: block; margin-bottom: 10px; }
+        .footer-container a:hover { color: #ff9800; padding-left: 5px; }
+        .footer-bottom { text-align: center; border-top: 1px solid #222; padding-top: 30px; margin-top: 50px; font-size: 13px; color: #555; }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 5%; background: rgba(0,0,0,0.9); }
+            .menu-toggle { display: flex; }
+            .nav-menu { 
+                position: absolute; top: 100%; right: -100%; 
+                background: #000; flex-direction: column; 
+                width: 100%; padding: 40px; transition: 0.4s; 
+                height: 100vh; border-top: 1px solid #222;
+            }
+            .nav-menu.active { right: 0; }
+            .gallery-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .gallery-item { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+ 
+
+<div class="lightbox" id="lightbox">
+    <span class="close-lightbox">&times;</span>
+    <img src="" alt="Fullscreen Image">
+</div>
+
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">OFF<span>ROAD</span></a>
+
+    <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="nav-menu" id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="tentang-kami.html">Tentang</a>
+        <a href="blog.HTML">Blog</a>
+
+        <div class="nav-dropdown">
+            <a href="#" id="paketBtn">Paket ▾</a>
+            <div class="dropdown-menu" id="paketMenu">
+                <a href="fun-offroad.Html">Fun Offroad</a>
+                <a href="adventure-offroad.HTML">Adventure Offroad</a>
+                <a href="corporate-team.HTML">Corporate Team</a>
+            </div>
+        </div>
+
+        <a href="galeri.html" style="color: #ff9800;">Galeri</a>
+     <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking" class="cta">Booking</a>
+    </div>
+</nav>
+
+<header class="gallery-header">
+    <div>
+        <h1>Dokumentasi Petualangan</h1>
+        <p>Lihat bagaimana keseruan menembus batas alam bersama tim profesional kami.</p>
+    </div>
+</header>
+
+<section class="gallery-section">
+    <div class="gallery-container">
+        <div class="gallery-item">
+            <img src="aset/Aksi Jeep melintasi lumpur.webp" alt="Aksi Jeep melintasi lumpur">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Pemandangan puncak gunung.webp" alt="Pemandangan puncak gunung">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Tim Corporate Gathering.webp" alt="Tim Corporate Gathering">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Track ekstrem tanjakan.webp" alt="Track ekstrem tanjakan">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Camping Ground.webp" alt="Camping Ground">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="aset/Sunset Offroad.webp" alt="Sunset Offroad">
+            <div class="gallery-overlay">
+                <span>ZOOM IN</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Siap Menaklukkan Medan?</h2>
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20booking%20Adventure%20Offroad"
+           class="cta-btn">
+            Booking Sekarang
+        </a>
+    </div>
+</section>
+
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>OFFROAD ADVENTURE</h3>
+            <p>Jalan Raya Adventure No.12, Kota Malang, Indonesia</p>
+            <p style="margin-top: 10px;">Pengalaman offroad terbaik di Jawa Timur dengan armada 4x4 premium dan driver bersertifikat.</p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="tentang-kami.html">Tentang Kami</a>
+            <a href="galeri.html">Galeri</a>
+            <p><a href="blog.HTML">Blog</a></p>
+        </div>
+
+        <div>
+            <h3>Paket Pilihan</h3>
+            <a href="fun-offroad.Html">Fun Offroad</a>
+            <a href="adventure-offroad.HTML">Extreme Adventure</a>
+            <a href="corporate-team.HTML">Team Corporate</a>
+        </div>
+
+  <div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <h3>Sosial Media</h3>
+    <p>Ikuti & hubungi kami melalui platform favorit Anda:</p>
+
+    <div style="display:flex; gap:18px; margin-top:15px; font-size:26px;">
+        
+        <!-- Instagram -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Instagram"
+           title="Instagram"
+           style="color:#E1306C;">
+            <i class="bi bi-instagram"></i>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20Facebook"
+           title="Facebook"
+           style="color:#1877F2;">
+            <i class="bi bi-facebook"></i>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20tertarik%20dari%20dari%20TikTok"
+           title="TikTok"
+           style="color:#FFFFFF;">
+            <i class="bi bi-tiktok"></i>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/628123456789?text=Halo,%20saya%20ingin%20booking"
+           title="WhatsApp"
+           style="color:#25D366;">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+
+    </div>
+</div>
+
+  </div>
+
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Outbound Offroad Adventure. Dirancang untuk Petualang Sejati.</p>
+    </div>
+</footer>
+<script>
+    
+</script>
+<script>
+    // JS UNTUK NAVBAR SCROLL
+    const navbar = document.getElementById("navbar");
+    window.onscroll = () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+    };
+
+    // NAVBAR MOBILE TOGGLE
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+    const paketBtn = document.getElementById("paketBtn");
+    const paketMenu = document.getElementById("paketMenu");
+
+    menuToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+    });
+
+    paketBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        paketMenu.classList.toggle("show");
+    });
+
+    // LIGHTBOX LOGIC
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('img');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const closeLightbox = document.querySelector('.close-lightbox');
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const imgSrc = item.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Stop scrolling
+        });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto'; // Enable scrolling
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if(e.target !== lightboxImg) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+</script>
+<div class="fab-container">
+
+    <!-- BACK TO TOP -->
+    <div class="fab-btn fab-top" id="backToTop" onclick="backToTop()">
+        <!-- SVG PANAH -->
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="white" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5" />
+            <path d="M5 12l7-7 7 7" />
+        </svg>
+    </div>
+
+    <!-- WHATSAPP -->
+     <div class="fab-btn fab-wa">
+    <!-- SVG DI SINI -->
+   
+
+<a href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20bertanya"
+   target="_blank">
+<svg viewBox="0 0 512 512" width="28" height="28">
+  <!-- BALON CHAT -->
+  <path fill="#FFFFFF" d="M256 32C132.3 32 32 128.9 32 248c0 50.6 18.1 97.3 48.3 134.2L48 480l101.6-30.1c33.4 18.3 71.8 28.7 112.4 28.7 123.7 0 224-96.9 224-216.6S379.7 32 256 32z"/>
+  
+  <!-- LOGO WA -->
+  <path fill="#25D366" d="M256 64c-105.9 0-192 83.6-192 184 0 46.3 18.2 89.4 48.4 121.6L96 416l50.5-14.7C177.6 420.8 215.8 432 256 432c105.9 0 192-83.6 192-184S361.9 64 256 64z"/>
+
+  <!-- TELEPON WA -->
+  <path fill="#FFFFFF" d="M341.6 299.2c-5.2-2.6-30.6-15-35.3-16.7-4.7-1.7-8.1-2.6-11.5 2.6-3.4 5.2-13.3 16.7-16.3 20.1-3 3.4-6 3.9-11.2 1.3-30.6-15-50.6-26.8-70.7-60.8-5.2-8.9 5.2-8.3 15-28.2 1.7-3.4.9-6.5-.4-9.1-1.3-2.6-11.5-27.4-15.8-37.6-4.3-10.4-8.7-9.1-11.5-9.1-3 0-6.5-.4-10-.4s-9.1 1.3-13.9 6.5c-4.8 5.2-18.3 17.9-18.3 43.7s18.7 50.8 21.3 54.2c2.6 3.4 36.9 56.3 89.5 78.9 12.5 5.4 22.3 8.6 29.9 11 12.6 4 24.1 3.4 33.2 2.1 10.1-1.5 30.6-12.5 34.9-24.6 4.3-12.1 4.3-22.5 3-24.6-1.3-2.1-4.7-3.4-9.9-6z"/>
+</svg>
+</a>
+</div>
+
+</div>
+
+
+<script>
+const topBtn = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        topBtn.classList.add("show");
+    } else {
+        topBtn.classList.remove("show");
+    }
+});
+
+function backToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
+
+
+</body>
+
+</html>
